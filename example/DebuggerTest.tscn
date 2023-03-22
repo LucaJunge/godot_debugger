@@ -1,50 +1,52 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://82541n7cooa0"]
 
-[ext_resource path="res://addons/debugger/debugger.gd" type="Script" id=1]
-[ext_resource path="res://addons/debugger/icon-16.png" type="Texture" id=2]
-[ext_resource path="res://example/DebuggerTest.gd" type="Script" id=3]
-[ext_resource path="res://example/RandomWalk.gd" type="Script" id=4]
-[ext_resource path="res://addons/debugger/resources/debugger_theme.tres" type="Theme" id=5]
+[ext_resource type="Script" path="res://addons/debugger/debugger.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cojeigrkro07e" path="res://addons/debugger/icon-16.png" id="2"]
+[ext_resource type="Script" path="res://example/DebuggerTest.gd" id="3"]
+[ext_resource type="Script" path="res://example/RandomWalk.gd" id="4"]
+[ext_resource type="Theme" uid="uid://bu04rvgks8ddv" path="res://addons/debugger/resources/debugger_theme.tres" id="5"]
 
-[sub_resource type="StyleBoxEmpty" id=1]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrj30"]
 
 [node name="DebuggerTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 3 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3")
 
-[node name="Bug" type="Sprite" parent="."]
-position = Vector2( 421, 98 )
-texture = ExtResource( 2 )
-script = ExtResource( 4 )
-__meta__ = {
-"_editor_description_": "hello"
-}
+[node name="Bug" type="Sprite2D" parent="."]
+position = Vector2(421, 98)
+texture = ExtResource("2")
+script = ExtResource("4")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "This label appears in             
 the debugger as well! Yay!             "
-align = 2
-valign = 1
-__meta__ = {
-"_edit_lock_": true
-}
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-mouse_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Debugger" type="PanelContainer" parent="MarginContainer"]
-margin_right = 320.0
-margin_bottom = 200.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource( 5 )
-custom_styles/panel = SubResource( 1 )
-script = ExtResource( 1 )
-size = Vector2( 350, 200 )
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("5")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hrj30")
+script = ExtResource("1")
+_size = Vector2(350, 300)

@@ -1,0 +1,11 @@
+res://default_env.tres
+res://example/DebuggerTest.tscn
+res://addons/debugger/resources/ButtonFont.tres
+res://addons/debugger/resources/debugger_theme.tres
+res://addons/debugger/ui.tscn
+res://addons/debugger/components/monitor_float/monitor_float.tscn
+res://example/DebuggerTest.gd
+res://addons/debugger/debugger.gd
+res://addons/debugger/components/input_integer/input_integer.tscn
+res://addons/debugger/components/monitor_integer/monitor_integer.tscn
+res://addons/debugger/components/monitor_vector2/monitor_vector2.tscn

@@ -1,8 +1,8 @@
 extends PanelContainer
 # INPUT INTEGER
 
-onready var identifier_label = get_node("%identifier")
-onready var value_label = get_node("%value")
+@onready var identifier_label = get_node("%identifier")
+@onready var value_label = get_node("%value")
 
 var obj: Object = Object()
 var property: String = ""

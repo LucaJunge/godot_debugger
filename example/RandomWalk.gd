@@ -1,9 +1,9 @@
-extends Sprite
+extends Sprite2D
 
 var factor: float = 0.5
 var walk_distance: float = 3.15
 var scale_distance: float = 0.05
-onready var initial_position = position
+@onready var initial_position = position
 
 func _ready() -> void:
 	randomize()

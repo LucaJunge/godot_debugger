@@ -1,8 +1,8 @@
 extends Control
 
-onready var debugger = get_node("MarginContainer/Debugger")
+@onready var debugger = get_node("MarginContainer/Debugger")
 
-onready var unix_time = Time.get_unix_time_from_system()
+@onready var unix_time = Time.get_unix_time_from_system()
 
 var _timer = null
 
@@ -14,10 +14,16 @@ func _ready() -> void:
 	# Add your properties
 	debugger.add_input(debugger, "font_size", "Font Size")
 	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "scale", "Bug Scale")
-	debugger.add_monitor(bug, "rotation_degrees", "Bug Rotation")
-	debugger.add_monitor(label, "text", "Text")
-	debugger.add_monitor(self, "unix_time", "Unix Time")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	debugger.add_monitor(bug, "position", "Bug Position")
+	#debugger.add_monitor(bug, "scale", "Bug Scale")
+	#debugger.add_monitor(bug, "rotation_degrees", "Bug Rotation")
+	#debugger.add_monitor(label, "text", "Text")
+	#debugger.add_monitor(self, "unix_time", "Unix Time")
 
 	
 	#TODO: debugger.set_rate(30) # 30 times a second, down to 1 times a second maybe?
@@ -25,7 +31,7 @@ func _ready() -> void:
 	_timer = Timer.new()
 	add_child(_timer)
 	
-	_timer.connect("timeout", self, "update_debugger")
+	_timer.connect("timeout", Callable(self, "update_debugger"))
 	_timer.set_wait_time(0.5)
 	_timer.set_one_shot(false)
 	_timer.start()
