@@ -4,22 +4,21 @@ extends PanelContainer
 # theme
 var _theme = preload("res://addons/debugger/resources/debugger_theme.tres")
 
-# Types of Monitors and Input
+# Monitor Types
 @onready var debugger_monitor_integer = preload("res://addons/debugger/components/monitor_integer/monitor_integer.tscn")
 @onready var debugger_monitor_vector2 = preload("res://addons/debugger/components/monitor_vector2/monitor_vector2.tscn")
 @onready var debugger_monitor_string = preload("res://addons/debugger/components/monitor_string/monitor_string.tscn")
 @onready var debugger_monitor_float = preload("res://addons/debugger/components/monitor_float/monitor_float.tscn")
 
+# Input Types
 @onready var debugger_input_integer = preload("res://addons/debugger/components/input_integer/input_integer.tscn")
 
-# ...
-
 @onready var ui = preload("ui.tscn").instantiate()
-
 @onready var list = ui.get_node("%ContentList")
-@onready var scroll_bar : HScrollBar = ui.get_node("%ScrollContainer").get_h_scroll_bar()
-@onready var content_margin = ui.get_node("%ScrollContainer/MarginContainer")
+@onready var scroll_bar : VScrollBar = ui.get_node("%ScrollContainer").get_v_scroll_bar()
+@onready var content_margin = ui.get_node("%ContentMarginContainer")
 @onready var drag_button = ui.get_node("%DragButton")
+@onready var diagonal_resizer = ui.get_node("%DiagonalResizer")
 
 @onready var monitors = []
 @onready var inputs = []
@@ -73,11 +72,7 @@ func _ready() -> void:
 		init()
 	
 func init() -> void:
-	
-	# Set width
-	#self.rect_min_size = Vector2(width.x, width.y)
-	#self.rect_size = Vector2(width.x, width.y)
-	
+
 	# remove background of the margin container surrounding the debugger
 	self.set("theme_override_styles/panel", StyleBoxEmpty.new())
 	
@@ -87,11 +82,14 @@ func init() -> void:
 	ui.custom_minimum_size = Vector2(_size.x, _size.y)
 	ui.size = Vector2(_size.x, _size.y)
 	
-	# add drag button events
-	drag_button.connect("gui_input", Callable(self, "on_drag_input"))
+	# Vertical drag button in the heading
+	drag_button.gui_input.connect(on_drag_input.bind(false))
+	
+	# Diagonal drag button in the bottom right
+	diagonal_resizer.gui_input.connect(on_drag_input.bind(true))
 	
 	# add scroll container v scroll hack to add margin
-	scroll_bar.connect("visibility_changed", Callable(self, "toggle_scrollbar_margin"))
+	scroll_bar.visibility_changed.connect(toggle_scrollbar_margin)
 	
 	# padding...
 	# update rate...
@@ -99,13 +97,16 @@ func init() -> void:
 	# etc.
 	
 	self.add_child(ui)
+	
+	# after addding the ui call this once to set the margins correctly
+	toggle_scrollbar_margin()
 
 func update() -> void:
 	for monitor in monitors:
 		monitor.update()
 
-
 func remove(_object: String) -> bool:
+	printerr("REMOVE IS NOT IMPLEMENTED")
 	return false
 
 func add_monitor(obj: Object, property: String, identifier: String) -> void:
@@ -118,13 +119,14 @@ func add_monitor(obj: Object, property: String, identifier: String) -> void:
 	
 	list.add_child(new_monitor)
 	
-	new_monitor.init(obj, property, identifier)
-	monitors.append(new_monitor)
+	if new_monitor != null:
+		new_monitor.init(obj, property, identifier)
+		monitors.append(new_monitor)
 
 # This returns a configured monitor instance for the given control
 func get_monitor_of_type(obj, property) -> Control:
 	
-	var new_monitor
+	var new_monitor = null
 	
 	match typeof(obj[property]):
 		TYPE_VECTOR2:
@@ -135,6 +137,8 @@ func get_monitor_of_type(obj, property) -> Control:
 			new_monitor = debugger_monitor_integer.instantiate()
 		TYPE_FLOAT:
 			new_monitor = debugger_monitor_float.instantiate()
+		_:
+			printerr("%s is not a supported type. " % typeof(obj[property]))
 			
 	return new_monitor
 
@@ -166,8 +170,7 @@ func get_input_of_type(obj, property) -> Control:
 			
 	return new_input
 
-func on_drag_input(event: InputEvent):
-	
+func on_drag_input(event: InputEvent, also_horizontal: bool):
 	# On left button click pressed
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		drag_pressed = true
@@ -181,13 +184,14 @@ func on_drag_input(event: InputEvent):
 	if event is InputEventMouseMotion and drag_pressed:
 		if drag_start:
 			self.size.x += event.position.x
+			if also_horizontal:
+				self.size.y += event.position.y
 
 # Toggle the margin between the scrollbar and the content
 func toggle_scrollbar_margin() -> void:
 	if scroll_bar.is_visible():
 		print("is visible")
-		# set the margin to the double amount, to account for margin between scroll bar and its container
-		content_margin.set("theme_override_constants/margin_right", panel_padding)
+		content_margin.set("theme_override_constants/margin_right", scroll_bar.size.x)
 	else:
-		content_margin.set("theme_override_constants/margin_right", panel_padding)
+		content_margin.set("theme_override_constants/margin_right", 0)
 		print("not visible")

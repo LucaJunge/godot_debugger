@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://example/RandomWalk.gd" id="4"]
 [ext_resource type="Theme" uid="uid://bu04rvgks8ddv" path="res://addons/debugger/resources/debugger_theme.tres" id="5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hrj30"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l814k"]
 
 [node name="DebuggerTest" type="Control"]
 layout_mode = 3
@@ -47,6 +47,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("5")
-theme_override_styles/panel = SubResource("StyleBoxEmpty_hrj30")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l814k")
 script = ExtResource("1")
 _size = Vector2(350, 300)

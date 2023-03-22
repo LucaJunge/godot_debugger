@@ -14,16 +14,10 @@ func _ready() -> void:
 	# Add your properties
 	debugger.add_input(debugger, "font_size", "Font Size")
 	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	debugger.add_monitor(bug, "position", "Bug Position")
-	#debugger.add_monitor(bug, "scale", "Bug Scale")
-	#debugger.add_monitor(bug, "rotation_degrees", "Bug Rotation")
-	#debugger.add_monitor(label, "text", "Text")
-	#debugger.add_monitor(self, "unix_time", "Unix Time")
+	debugger.add_monitor(bug, "scale", "Bug Scale")
+	debugger.add_monitor(bug, "rotation_degrees", "Bug Rotation")
+	debugger.add_monitor(label, "text", "Text")
+	debugger.add_monitor(self, "unix_time", "Unix Time")
 
 	
 	#TODO: debugger.set_rate(30) # 30 times a second, down to 1 times a second maybe?

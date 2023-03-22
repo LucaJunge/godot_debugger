@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuil6iosd45vk"]
+[gd_scene load_steps=7 format=3 uid="uid://cuil6iosd45vk"]
 
 [ext_resource type="Theme" uid="uid://bu04rvgks8ddv" path="res://addons/debugger/resources/debugger_theme.tres" id="1"]
-[ext_resource type="Texture2D" uid="uid://cojeigrkro07e" path="res://addons/debugger/icon-16.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dl1te4t6bydri" path="res://icon.svg" id="2_f3714"]
 [ext_resource type="FontFile" uid="uid://bou8rem5finci" path="res://addons/debugger/fonts/SourceCodePro-Medium.ttf" id="3_plcup"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
@@ -17,6 +17,8 @@ anti_aliasing = false
 [sub_resource type="LabelSettings" id="LabelSettings_htxek"]
 font = ExtResource("3_plcup")
 font_color = Color(0.447059, 0.447059, 0.447059, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pkkd3"]
 
 [node name="MarginContainer" type="MarginContainer"]
 custom_minimum_size = Vector2(100, 0)
@@ -60,8 +62,7 @@ size_flags_horizontal = 3
 
 [node name="DebuggerIcon" type="TextureRect" parent="Background/List/Heading/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2")
-expand_mode = 2
+texture = ExtResource("2_f3714")
 stretch_mode = 5
 
 [node name="HeadingLabel" type="Label" parent="Background/List/Heading/HBoxContainer/MarginContainer/HBoxContainer"]
@@ -69,7 +70,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Debugger"
 vertical_alignment = 1
-uppercase = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="Background/List/Heading/HBoxContainer"]
 layout_mode = 2
@@ -99,23 +99,24 @@ theme_override_constants/margin_bottom = 8
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer"]
+[node name="ContentMarginContainer" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="ContentList" type="VBoxContainer" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer"]
+[node name="ContentList" type="VBoxContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="HelpLabel" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList"]
+[node name="HelpLabel" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -124,28 +125,33 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList/HelpLabel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel"]
 layout_mode = 2
 
-[node name="HelperText" type="Label" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList/HelpLabel/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="HelperText" type="Label" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "To add properties to the debugger, get a reference to the debugger and add a property of an object:"
 autowrap_mode = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList/HelpLabel/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"PanelContainerValue"
 
-[node name="MarginContainer" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList/HelpLabel/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 0
 
-[node name="HelperCode" type="Label" parent="Background/List/MarginContainer/ScrollContainer/MarginContainer/ContentList/HelpLabel/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="HelperCode" type="Label" parent="Background/List/MarginContainer/ScrollContainer/ContentMarginContainer/ContentList/HelpLabel/VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -156,3 +162,12 @@ debugger.addMonitor(my_object, \"position\", \"Object Position\")
 "
 label_settings = SubResource("LabelSettings_htxek")
 autowrap_mode = 3
+
+[node name="DiagonalResizer" type="Panel" parent="Background"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+mouse_default_cursor_shape = 12
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pkkd3")
